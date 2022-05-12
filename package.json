@@ -1,0 +1,19 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "App weather by CMD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pPlanello/weatherApp.git"
+  },
+  "author": "pPlanello",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pPlanello/weatherApp/issues"
+  },
+  "homepage": "https://github.com/pPlanello/weatherApp#readme"
+}
