@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pPlanello/weatherApp#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "colors": "^1.4.0",
     "inquirer": "^8.2.4"
   }
