@@ -70,31 +70,31 @@ const readInput = async(message) => {
 }
 
 /**
- * Method to list and obtain id to delete task
+ * Method to show list of places
  * 
- * @param {*} tasks to list
+ * @param {*} places to list
  * @returns id choice to delete
  */
-const showTaskToDelete = async(tasks = []) => {
+const showPlacesResults = async(places = []) => {
 
-    const choices = tasks.map((task, i) => {
-        const index = `${i + 1}.green`;
+    const choices = places.map((place, i) => {
+        const index = `${i + 1}`;
         return {
-            value: task.id,
-            name: `${index} ${task.desc}`
+            value: place.id,
+            name: `${index}. ${place.name}`
         }
     });
 
     choices.unshift({
-        value: 'o',
-        name: '0'.green + ' Cancelar'
-    })
+        value: '0',
+        name: '0. Cancelar'.yellow
+    });
 
     const question = [ 
         {
             type: 'list',
             name: 'id',
-            message: 'Borrar Tarea',
+            message: 'Seleccione el lugar:',
             choices
         }
     ];
@@ -178,7 +178,7 @@ module.exports = {
     inquirerMenu,
     confirmDialog,
     readInput,
-    showTaskToDelete,
+    showPlacesResults,
     showTaskCheckList,
     stop,
     confirm

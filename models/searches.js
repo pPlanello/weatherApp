@@ -8,6 +8,7 @@ class Searches {
         return {
             'proximity': 'ip',
             'language': 'es',
+            'types': 'region',
             'access_token': process.env.MAPBOX_KEY
         }
     }
@@ -21,7 +22,13 @@ class Searches {
                 params: this.paramsMapBox
             });
             const response = await instance.get();
-            return response.data;
+            return response.data.features
+                .map(place => ({
+                    id: place.id,
+                    name: place.place_name,
+                    lng: place.center[0],
+                    lat: place.center[1]
+                }));
         } catch (err) {
             console.error('*** ', err);
             return [];
