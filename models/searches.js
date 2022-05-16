@@ -8,7 +8,7 @@ class Searches {
         return {
             'proximity': 'ip',
             'language': 'es',
-            'access_token': 'pk.eyJ1IjoicHBsYW5lbGxvIiwiYSI6ImNsMzhpdzM2MTAwYzQzZXFtdGhvdTZuNmUifQ.IzG2-BIkoIgNNdmQsWuZyw'
+            'access_token': process.env.MAPBOX_KEY
         }
     }
 
