@@ -7,6 +7,8 @@ const main = async() => {
     const searches = new Searches();
     let option;
 
+    
+
     do {
 
         option = await inquirerMenu();
@@ -19,8 +21,13 @@ const main = async() => {
                 const results = await searches.place(place);
                 // Select place
                 const id = await showPlacesResults(results);
+                if (id === '0') {
+                    continue;
+                }
                 const placeSelected = results.find(res => res.id === id);
                 const weatherPlace = await searches.weather(placeSelected.lng, placeSelected.lat);
+                // Add history
+                searches.addHistory(placeSelected.name);
                 // Show result
                 console.log('\n Información de la ciudad\n'.green);
                 console.log('Ciudad: '.green + placeSelected.name);
@@ -32,12 +39,18 @@ const main = async() => {
                 console.log('Temperaturas: '.green + '{max: ' + weatherPlace.max_temp + ' ºC, min: ' + weatherPlace.min_temp + ' ºC}');
                 break;
             case 2:
+                searches.historyTitleCase.forEach((place, index) => {
+                    const id = `${index + 1}`.green;
+                    console.log(id + ' ' + place);
+                });
                 break;
         }
         
         if (option !== 0) {
             await stop();
         }
+
+        searches.saveDB();
 
     } while (option !== 0)
 } 

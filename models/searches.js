@@ -1,8 +1,14 @@
+const fs = require('fs')
 const axios = require('axios');
 
 class Searches {
 
     history = [];
+    dbPath = './db/database.json';
+
+    constructor() {
+        this.readDB();
+    }
 
     get paramsMapBox() {
         return {
@@ -20,9 +26,21 @@ class Searches {
             'units': 'metric'
         }
     }
+    
+    get historyTitleCase() {
+        return this.history.map(place => {
+            let words = place.split(' ');
+            words = words.map(p => p[0].toUpperCase() + p.substring(1));
+            return words.join(' ');
+        });
+    }
 
-    constructor() {}
-
+    /**
+     * Method to call mapbox to get info about the place
+     * 
+     * @param {string} place to find
+     * @returns info about place
+     */
     async place(place = '') {
         try {
             const instance = axios.create({
@@ -43,6 +61,13 @@ class Searches {
         }
     }
 
+    /**
+     * Method to call open weather to get info about the weather with this fields
+     * 
+     * @param {number} lng longitude 
+     * @param {number} lat latitude
+     * @returns info about weather
+     */
     async weather(lng, lat) {
         try {
             const instance = axios.create({
@@ -62,6 +87,40 @@ class Searches {
             console.error('*** ', err);
             return {};
         }
+    }
+
+    /**
+     * Add place in the history
+     * 
+     * @param {string} place
+     */
+    addHistory(place = '') {
+        if (place !== undefined && this.history.includes(place.toLocaleLowerCase())) {
+            return;
+        }
+        // last 10 results
+        this.history = this.history.slice(0, 10);
+        this.history.unshift(place.toLocaleLowerCase());
+    }
+
+    /**
+     * Save history in DataBase
+     */
+    saveDB() {
+        const payload = { history: this.history };
+        fs.writeFileSync(this.dbPath, JSON.stringify(payload));
+    }
+
+    /**
+     * Read DataBase to load history 
+     */
+    readDB() {
+        if (!fs.existsSync(this.dbPath)) {
+            return;
+        }
+
+        const info = fs.readFileSync(this.dbPath, {encoding: 'utf-8'});
+        this.history = JSON.parse(info).history;
     }
 }
 
