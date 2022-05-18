@@ -1,4 +1,4 @@
 # Weather App
 this is an app that uses:
-* [MAPBOX](https://www.mapbox.com/) to get infomation about cities.
-* 
+* [MapBox](https://www.mapbox.com/) to get infomation about cities.
+* [OpenWeather](https://openweathermap.org/) to get information about weather in cities.
